@@ -164,6 +164,7 @@ app.layout = html.Div(className="container",
                                             'width':'100%'
                                             , 'height': '4rem'
                                             , 'margin': '1.75rem 0'
+                                            , 'font-size': '1.5rem'
                                             }
                                   )
                             ]
@@ -178,6 +179,7 @@ app.layout = html.Div(className="container",
                                             'width':'100%'
                                             , 'height': '4rem'
                                             , 'margin': '1.75rem 0'
+                                            , 'font-size': '1.5rem'
                                             }
                                   )
                             ]
@@ -197,7 +199,22 @@ app.layout = html.Div(className="container",
     , html.Div(
         className='row'
         , id='show-details'
-        , style={'width': '50%', 'padding-left': '25%'}
+        , style={'width': '50%', 'margin-left': '25%'}
+        # , children=[
+        #     dbc.Button(
+        #         'Detalhes'
+        #         , id='button-show-details'
+        #         , n_clicks=0
+        #         , className='mr-1'
+        #         , color='info'
+        #         , style={
+        #             'width':'100%'
+        #             , 'height': '4rem'
+        #             , 'margin': '1.75rem 0'
+        #             , 'font-size': '1.5rem'
+        #             }
+        #         )
+        #     ]
         )
     
     , html.Div(
@@ -244,15 +261,17 @@ def predict(n_clicks, reset, idade, sexo, educ, civil):
                             , 'margin': '5rem 0'
                             }
                         )
-            , html.Button(
+            , dbc.Button(
                 'Detalhes'
                 , id='button-show-details'
                 , n_clicks=0
-                , className='twelve columns'
+                , className='mr-1'
+                , color='info'
                 , style={
                     'width':'100%'
                     , 'height': '4rem'
                     , 'margin': '1.75rem 0'
+                    , 'font-size': '1.5rem'
                     }
                 )
             , True
