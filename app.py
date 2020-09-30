@@ -8,13 +8,14 @@ import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Input, Output, State
 from dash.exceptions import PreventUpdate
+import dash_bootstrap_components as dbc
 # import numpy as np
 from prediction import classify
 import variaveis
 import plots
 
 
-external_stylesheets = ['assets/css.css']
+external_stylesheets = ['assets/css.css', dbc.themes.MATERIA]
 
 app = dash.Dash(__name__
                 , external_stylesheets=external_stylesheets
@@ -28,7 +29,7 @@ def suspended_list_val(group):
 app.layout = html.Div(className="container", 
                       style={'width': '100%'}
                       , children=[
-    dcc.Store(id='memory')                      
+    dcc.Store(id='memory')
     , html.Div(                      
         html.H1(children='Crédito Automático'
                 , style={'backgroundColor': 'blue'
@@ -155,9 +156,10 @@ app.layout = html.Div(className="container",
                         )
                     , html.Div(
                         children=[
-                            html.Button('Submit', id='submit-val'
+                            dbc.Button('Enviar', id='submit-val'
                                         , n_clicks=0
-                                        , className='twelve.columns'
+                                        , className='mr-1'
+                                        , color='success'
                                         , style={
                                             'width':'100%'
                                             , 'height': '4rem'
@@ -168,9 +170,10 @@ app.layout = html.Div(className="container",
                         )
                     , html.Div(
                         children=[
-                            html.Button('Restart', id='reset-val'
+                            dbc.Button('Restart', id='reset-val'
                                         , n_clicks=0
-                                        , className='twelve.columns'
+                                        , className='mr-1'
+                                        , color='secondary'
                                         , style={
                                             'width':'100%'
                                             , 'height': '4rem'
@@ -182,15 +185,6 @@ app.layout = html.Div(className="container",
                     ]
                 )
             
-            # , html.Div(className='twelve.columns', style={'textAlign':'center'}
-            #     , children=[
-            #     html.Img(src=app.get_asset_url('ok_icon.gif'), style={'width':'50mm'})
-            #     ])
-            # , html.Div(className='twelve.columns', style={'textAlign':'center'}
-            #     , children=[
-            #     html.Img(src=app.get_asset_url('x_icon.gif'), style={'width':'50mm'})
-            #     ])
-            # , html.Div(style={'padding': 10})
             , html.Div(className='six columns'
                         , style={
                             'textAlign':'center'
@@ -218,7 +212,8 @@ app.layout = html.Div(className="container",
 @app.callback(
     [Output('memory', 'data')
      , Output('pass-not-pass', 'children')
-     , Output('show-details', 'children')],
+     , Output('show-details', 'children')
+     , Output('submit-val', 'disabled')],
     [Input('submit-val', 'n_clicks')
      , Input('reset-val','n_clicks')
       , State('input-idade', 'value')
@@ -233,7 +228,7 @@ def predict(n_clicks, reset, idade, sexo, educ, civil):
     
     if button_id=='reset-val':
         n_clicks = 0
-        return '', '', ''
+        return '', '', '', False
     
     if n_clicks>0:
         aprova, risco = classify(idade, sexo, educ, civil)
@@ -260,6 +255,7 @@ def predict(n_clicks, reset, idade, sexo, educ, civil):
                     , 'margin': '1.75rem 0'
                     }
                 )
+            , True
             )
     else:
         raise PreventUpdate
@@ -312,4 +308,4 @@ def show_details(n_clicks, reset, risco):
 
 
 if __name__ == '__main__':
-    app.run_server(debug=True, dev_tools_ui=True)
+    app.run_server(debug=True, dev_tools_ui=False)

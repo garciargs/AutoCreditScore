@@ -35,7 +35,7 @@ def table(risco):
     df_format[['Risco', 'Idade']] = df[['Risco', 'Idade']]
     
     df_format = df_format[list(df_format.columns[-2:])
-                          +list(df_format.columns[:-3])]
+                          +list(df_format.columns[:-2])]
     
        
     df_format['selection'] = 0
@@ -72,6 +72,6 @@ def table(risco):
                 )
             )
         )
-    fig.update_layout(height=700)
+    fig.update_layout(height=700, width=1440)
     
     return fig
