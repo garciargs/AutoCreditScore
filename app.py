@@ -21,6 +21,7 @@ app = dash.Dash(__name__
                 , external_stylesheets=external_stylesheets
                 , suppress_callback_exceptions=True)
 
+server = app.server
 
 def suspended_list_val(group):
     return [{'label': x, 'value': x} for x in variaveis.transform[group].values()]
